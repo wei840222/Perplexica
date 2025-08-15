@@ -1,8 +1,8 @@
 import { Clock, Edit, Share, Trash, FileText, FileDown } from 'lucide-react';
 import { Message } from './ChatWindow';
 import { useEffect, useState, Fragment } from 'react';
-import { formatTimeDifference } from '@/lib/utils';
-import { useTranslations } from 'next-intl';
+import { formatTimeDifference, formatRelativeTime } from '@/lib/utils';
+import { useLocale, useTranslations } from 'next-intl';
 import DeleteChat from './DeleteChat';
 import {
   Popover,
@@ -150,10 +150,10 @@ const Navbar = ({
   chatId: string;
 }) => {
   const [title, setTitle] = useState<string>('');
-  const [timeAgo, setTimeAgo] = useState<string>('');
   const tCommon = useTranslations('common');
   const tNavbar = useTranslations('navbar');
   const tExport = useTranslations('export');
+  const locale = useLocale();
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -162,28 +162,11 @@ const Navbar = ({
           ? `${messages[0].content.substring(0, 20).trim()}...`
           : messages[0].content;
       setTitle(newTitle);
-      const newTimeAgo = formatTimeDifference(
-        new Date(),
-        messages[0].createdAt,
-      );
-      setTimeAgo(newTimeAgo);
+      // title already set above
     }
   }, [messages]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (messages.length > 0) {
-        const newTimeAgo = formatTimeDifference(
-          new Date(),
-          messages[0].createdAt,
-        );
-        setTimeAgo(newTimeAgo);
-      }
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Removed per-locale relative time uses render-time computation
 
   return (
     <div className="fixed z-40 top-0 left-0 right-0 px-4 lg:pl-[104px] lg:pr-6 lg:px-8 flex flex-row items-center justify-between w-full py-4 text-sm text-black dark:text-white/70 border-b bg-light-primary dark:bg-dark-primary border-light-100 dark:border-dark-200">
@@ -195,7 +178,13 @@ const Navbar = ({
       </a>
       <div className="hidden lg:flex flex-row items-center justify-center space-x-2">
         <Clock size={17} />
-        <p className="text-xs">{timeAgo} ago</p>
+        <p className="text-xs">
+          {formatRelativeTime(
+            new Date(),
+            messages[0]?.createdAt || new Date(),
+            locale,
+          )}
+        </p>
       </div>
       <p className="hidden lg:flex">{title}</p>
 

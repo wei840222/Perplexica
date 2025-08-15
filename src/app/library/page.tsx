@@ -1,11 +1,11 @@
 'use client';
 
 import DeleteChat from '@/components/DeleteChat';
-import { cn, formatTimeDifference } from '@/lib/utils';
+import { cn, formatTimeDifference, formatRelativeTime } from '@/lib/utils';
 import { BookOpenText, ClockIcon, Delete, ScanEye } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export interface Chat {
   id: string;
@@ -18,6 +18,7 @@ const Page = () => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [loading, setLoading] = useState(true);
   const t = useTranslations('pages.library');
+  const locale = useLocale();
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -96,9 +97,7 @@ const Page = () => {
                 <div className="flex flex-row items-center space-x-1 lg:space-x-1.5 text-black/70 dark:text-white/70">
                   <ClockIcon size={15} />
                   <p className="text-xs">
-                    {t('ago', {
-                      time: formatTimeDifference(new Date(), chat.createdAt),
-                    })}
+                    {formatRelativeTime(new Date(), chat.createdAt, locale)}
                   </p>
                 </div>
                 <DeleteChat

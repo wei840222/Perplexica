@@ -1,7 +1,7 @@
 'use client';
 
 import { Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { toast } from 'sonner';
@@ -30,36 +30,39 @@ const Page = () => {
   const [activeTopic, setActiveTopic] = useState<string>(topics[0].key);
   const t = useTranslations('pages.discover');
 
-  const fetchArticles = async (topic: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/discover?topic=${topic}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  const fetchArticles = useCallback(
+    async (topic: string) => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/discover?topic=${topic}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message);
+        if (!res.ok) {
+          throw new Error(data.message);
+        }
+
+        data.blogs = data.blogs.filter((blog: Discover) => blog.thumbnail);
+
+        setDiscover(data.blogs);
+      } catch (err: any) {
+        console.error('Error fetching data:', err.message);
+        toast.error(t('errorFetchingData'));
+      } finally {
+        setLoading(false);
       }
-
-      data.blogs = data.blogs.filter((blog: Discover) => blog.thumbnail);
-
-      setDiscover(data.blogs);
-    } catch (err: any) {
-      console.error('Error fetching data:', err.message);
-      toast.error(t('errorFetchingData'));
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [t],
+  );
 
   useEffect(() => {
     fetchArticles(activeTopic);
-  }, [activeTopic]);
+  }, [activeTopic, fetchArticles]);
 
   return (
     <>

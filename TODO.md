@@ -85,14 +85,16 @@
 
 - 使用 `generateMetadata` + `getTranslations` 提供各語系標題描述
 
-3. Library / Discover 頁的標題與文案 i18n 化（下一優先）
+3. Library / Discover 頁的標題與文案 i18n 化（進度：已抽出標題、topics、錯誤訊息；補上 loading 國際化）
 
 - 抽出頁面標題、段落、空狀態、按鈕文案到 `pages.library`、`pages.discover` 等命名空間。
 - 收斂搜尋/新聞等部件內的硬字串。
+- 新增 `common.loading`，Discover / Library 的 loading 已改為使用 i18n 文案；Discover 的 `useEffect` 相依性警告已以 `useCallback` 修正。
 
 4. Navbar 相對時間字串 i18n 化
 
 - 目前顯示 `{timeAgo} ago`，改為以 `Intl.RelativeTimeFormat` 或 `next-intl` formatter 提供在地化字串（例如 `common.ago` 或完整相對時間）。
+  - 進度：已導入 `formatRelativeTime` 並在 Library 與 Navbar 套用，英文/中文顯示正確（避免未來時）。
 
 5. 日期/時間格式統一
 
