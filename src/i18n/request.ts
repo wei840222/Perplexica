@@ -1,6 +1,6 @@
 import { cookies, headers } from 'next/headers';
 import { getRequestConfig } from 'next-intl/server';
-import { LOCALES, type AppLocale } from './locales';
+import { LOCALES, DEFAULT_LOCALE, type AppLocale } from './locales';
 
 export default getRequestConfig(async () => {
   const cookieStore = await cookies();
@@ -12,7 +12,7 @@ export default getRequestConfig(async () => {
   function resolveFromAcceptLanguage(al: string | null | undefined): AppLocale {
     const supported = new Set<string>(LOCALES as readonly string[]);
     const raw = (al || '').toLowerCase();
-    if (!raw) return 'en';
+    if (!raw) return DEFAULT_LOCALE;
 
     type Candidate = { tag: string; q: number };
     const candidates: Candidate[] = raw
@@ -40,17 +40,34 @@ export default getRequestConfig(async () => {
       const exact = Array.from(supported).find((s) => s.toLowerCase() === tag);
       if (exact) return exact as AppLocale;
 
-      // base language match (e.g., en-US -> en)
+      // base language match (e.g., en-US -> en-GB/en-US: prefer en-US if available)
       const base = tag.split('-')[0];
+      const englishVariants = Array.from(supported).filter((s) =>
+        s.toLowerCase().startsWith('en-'),
+      ) as AppLocale[];
+      if (base === 'en' && englishVariants.length > 0) {
+        // prefer en-US as default English
+        const enUS = englishVariants.find((e) => e.toLowerCase() === 'en-us');
+        return (enUS || englishVariants[0]) as AppLocale;
+      }
       const baseMatch = Array.from(supported).find(
         (s) => s.split('-')[0].toLowerCase() === base,
       );
       if (baseMatch) return baseMatch as AppLocale;
 
-      // custom mapping for common Chinese variants to zh-TW since it's our only zh locale
-      if (tag.startsWith('zh')) return 'zh-TW';
+      // custom mapping for Chinese:
+      // - zh-HK -> zh-HK
+      // - zh-TW -> zh-TW
+      // - zh-CN, zh-SG -> zh-CN
+      if (tag.startsWith('zh')) {
+        if (/^zh-(hk)/i.test(tag)) return 'zh-HK';
+        if (/^zh-(tw)/i.test(tag)) return 'zh-TW';
+        if (/^zh-(cn|sg)/i.test(tag)) return 'zh-CN';
+        // default Chinese fallback: zh-TW
+        return 'zh-TW';
+      }
     }
-    return 'en';
+    return DEFAULT_LOCALE;
   }
 
   const hasCookie = (LOCALES as readonly string[]).includes(

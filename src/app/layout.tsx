@@ -8,7 +8,7 @@ import ThemeProvider from '@/components/theme/Provider';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
 import LocaleBootstrap from '@/components/LocaleBootstrap';
-import { LOCALES, type AppLocale } from '@/i18n/locales';
+import { LOCALES, DEFAULT_LOCALE, type AppLocale } from '@/i18n/locales';
 
 const montserrat = Montserrat({
   weight: ['300', '400', '500', '700'],
@@ -35,7 +35,7 @@ export default async function RootLayout({
     locale as string,
   )
     ? (locale as AppLocale)
-    : 'en';
+    : DEFAULT_LOCALE;
   return (
     <html className="h-full" lang={locale} suppressHydrationWarning>
       <body className={cn('h-full', montserrat.className)}>

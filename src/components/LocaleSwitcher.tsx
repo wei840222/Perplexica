@@ -3,7 +3,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { LOCALES, type AppLocale, LOCALE_LABELS } from '@/i18n/locales';
+import {
+  LOCALES,
+  DEFAULT_LOCALE,
+  type AppLocale,
+  LOCALE_LABELS,
+} from '@/i18n/locales';
 
 function setLocaleCookie(value: AppLocale) {
   const oneYear = 60 * 60 * 24 * 365;
@@ -22,7 +27,7 @@ export default function LocaleSwitcher({
   const currentLocale: AppLocale = useMemo(() => {
     return (LOCALES as readonly string[]).includes(current)
       ? (current as AppLocale)
-      : 'en';
+      : DEFAULT_LOCALE;
   }, [current]);
 
   const [value, setValue] = useState<AppLocale>(currentLocale);
