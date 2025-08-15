@@ -103,7 +103,7 @@ const WeatherWidget = () => {
       });
       setLoading(false);
     });
-  }, []);
+  }, [locale]);
 
   return (
     <div className="bg-light-secondary dark:bg-dark-secondary rounded-xl border border-light-200 dark:border-dark-200 shadow-sm flex flex-row items-center w-full h-24 min-h-[96px] max-h-[96px] px-3 py-2 gap-3">

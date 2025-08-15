@@ -9,6 +9,7 @@ import { ImagesIcon, VideoIcon } from 'lucide-react';
 import Link from 'next/link';
 import { PROVIDER_METADATA } from '@/lib/providers';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
+import { getPromptLanguageName } from '@/i18n/locales';
 import { useLocale, useTranslations } from 'next-intl';
 
 interface SettingsType {
@@ -242,17 +243,9 @@ const Page = () => {
     return trimmed;
   };
 
-  const getLocaleName = (loc: string) => {
-    const l = (loc || '').toLowerCase();
-    if (l.startsWith('zh') && (l.includes('tw') || l.includes('hant'))) {
-      return 'Traditional Chinese';
-    }
-    return 'English';
-  };
-
   const buildPrefixedPrompt = useCallback((base: string, loc: string) => {
-    const langName = getLocaleName(loc);
-    const prefix = `Always respond to all non-code content and explanations in {${langName}}.\nRules:\n1. All descriptions, explanations, and example clarifications must be in {${langName}}.\n2. Any content inside code blocks and code comments must be entirely in English.\n3. For language-specific or technical terms, use the original term in that specific language (do not translate it).`;
+    const langName = getPromptLanguageName(loc);
+    const prefix = `Always respond to all non-code content and explanations in ${langName}.\nRules:\n1. All descriptions, explanations, and example clarifications must be in ${langName}.\n2. Any content inside code blocks and code comments must be entirely in English.\n3. For language-specific or technical terms, use the original term in that specific language (do not translate it).`;
     const trimmed = (base || '').trim();
     // If already starts with the prefix (by simple inclusion of first sentence), avoid duplicating
     if (

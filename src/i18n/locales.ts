@@ -10,8 +10,9 @@ export const LOCALE_LABELS: Record<AppLocale, string> = {
 // Human-readable language name for prompt prefix
 export function getPromptLanguageName(loc: string): string {
   const l = (loc || '').toLowerCase();
-  if (l.startsWith('zh') && (l.includes('tw') || l.includes('hant'))) {
-    return 'Traditional Chinese';
-  }
-  return 'English';
+  const match = (
+    Object.keys(LOCALE_LABELS) as Array<keyof typeof LOCALE_LABELS>
+  ).find((k) => k.toLowerCase() === l);
+  if (match) return LOCALE_LABELS[match];
+  return LOCALE_LABELS['en'];
 }

@@ -3,10 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
-
-const LOCALES = ['en', 'zh-TW'] as const;
-
-export type AppLocale = (typeof LOCALES)[number];
+import { LOCALES, type AppLocale, LOCALE_LABELS } from '@/i18n/locales';
 
 function setLocaleCookie(value: AppLocale) {
   const oneYear = 60 * 60 * 24 * 365;
@@ -49,8 +46,11 @@ export default function LocaleSwitcher({
       }
       aria-label="Language"
     >
-      <option value="en">English</option>
-      <option value="zh-TW">繁體中文</option>
+      {LOCALES.map((loc) => (
+        <option key={loc} value={loc}>
+          {LOCALE_LABELS[loc]}
+        </option>
+      ))}
     </select>
   );
 }
