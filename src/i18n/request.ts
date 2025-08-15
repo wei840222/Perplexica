@@ -4,9 +4,7 @@ import { LOCALES, DEFAULT_LOCALE, type AppLocale } from './locales';
 
 export default getRequestConfig(async () => {
   const cookieStore = await cookies();
-  const cookieLocale = cookieStore.get('locale')?.value as
-    | AppLocale
-    | undefined;
+  const rawCookieLocale = cookieStore.get('locale')?.value;
 
   // Helper: parse Accept-Language and pick best supported locale
   function resolveFromAcceptLanguage(al: string | null | undefined): AppLocale {
@@ -70,12 +68,40 @@ export default getRequestConfig(async () => {
     return DEFAULT_LOCALE;
   }
 
-  const hasCookie = (LOCALES as readonly string[]).includes(
-    (cookieLocale as string) ?? '',
-  );
+  // Normalize any incoming locale (including legacy cookies like 'en' or 'fr')
+  function normalizeToSupported(loc?: string | null): AppLocale | null {
+    const val = (loc || '').trim();
+    if (!val) return null;
+    const lower = val.toLowerCase();
+    // exact case-insensitive match against supported
+    const exact = (LOCALES as readonly string[]).find(
+      (s) => s.toLowerCase() === lower,
+    );
+    if (exact) return exact as AppLocale;
+
+    // map base tags to preferred regional variants
+    const base = lower.split('-')[0];
+    if (base === 'en') return 'en-US';
+    if (base === 'fr') return 'fr-FR';
+    if (base === 'zh') {
+      if (/^zh-(hk)/i.test(lower)) return 'zh-HK';
+      if (/^zh-(tw)/i.test(lower)) return 'zh-TW';
+      if (/^zh-(cn|sg)/i.test(lower)) return 'zh-CN';
+      // default Chinese fallback
+      return 'zh-TW';
+    }
+    // try base language match generically
+    const baseMatch = (LOCALES as readonly string[]).find(
+      (s) => s.split('-')[0].toLowerCase() === base,
+    );
+    return (baseMatch as AppLocale) || null;
+  }
+
+  // Prefer normalized cookie if present and valid; otherwise use Accept-Language
   let locale: AppLocale;
-  if (hasCookie) {
-    locale = cookieLocale as AppLocale;
+  const normalizedCookie = normalizeToSupported(rawCookieLocale);
+  if (normalizedCookie) {
+    locale = normalizedCookie;
   } else {
     const hdrs = await headers();
     const acceptLanguage = hdrs.get('accept-language');

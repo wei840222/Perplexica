@@ -40,7 +40,7 @@ export const GET = async (req: Request) => {
 
     // derive base language from current locale (e.g., zh-TW -> zh)
     const locale = await getLocale();
-    const searxLanguage = (locale?.split('-')[0] || 'en') as string;
+    const searxLanguage = 'en';
 
     if (mode === 'normal') {
       const seenUrls = new Set();
