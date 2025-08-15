@@ -43,9 +43,8 @@ const exportAsMarkdown = (
   messages: Message[],
   title: string,
   labels: ExportLabels,
+  locale: string,
 ) => {
-  const locale =
-    (typeof navigator !== 'undefined' && navigator.language) || 'en';
   const date = formatDate(messages[0]?.createdAt || Date.now(), locale);
   let md = `# 💬 ${labels.chatExportTitle({ title })}\n\n`;
   md += `*${labels.exportedOn} ${date}*\n\n---\n`;
@@ -70,6 +69,7 @@ const exportAsPDF = async (
   messages: Message[],
   title: string,
   labels: ExportLabels,
+  locale: string,
 ) => {
   const doc = new jsPDF();
   // Ensure CJK-capable font is available, then set fonts
@@ -79,8 +79,6 @@ const exportAsPDF = async (
   } catch (e) {
     // If network fails, fallback to default font (may garble CJK)
   }
-  const locale =
-    (typeof navigator !== 'undefined' && navigator.language) || 'en';
   const date = formatDate(messages[0]?.createdAt || Date.now(), locale);
   let y = 15;
   const pageHeight = doc.internal.pageSize.height;
@@ -215,13 +213,18 @@ const Navbar = ({
                 <button
                   className="flex items-center gap-2 px-4 py-2 text-left hover:bg-light-secondary dark:hover:bg-dark-secondary transition-colors text-black dark:text-white rounded-lg font-medium"
                   onClick={async () => {
-                    exportAsMarkdown(messages, title || '', {
-                      chatExportTitle: (p) => tExport('chatExportTitle', p),
-                      exportedOn: tCommon('exportedOn'),
-                      user: tCommon('user'),
-                      assistant: tCommon('assistant'),
-                      citations: tCommon('citations'),
-                    });
+                    exportAsMarkdown(
+                      messages,
+                      title || '',
+                      {
+                        chatExportTitle: (p) => tExport('chatExportTitle', p),
+                        exportedOn: tCommon('exportedOn'),
+                        user: tCommon('user'),
+                        assistant: tCommon('assistant'),
+                        citations: tCommon('citations'),
+                      },
+                      locale,
+                    );
                   }}
                 >
                   <FileText size={17} className="text-[#24A0ED]" />
@@ -230,13 +233,18 @@ const Navbar = ({
                 <button
                   className="flex items-center gap-2 px-4 py-2 text-left hover:bg-light-secondary dark:hover:bg-dark-secondary transition-colors text-black dark:text-white rounded-lg font-medium"
                   onClick={async () => {
-                    await exportAsPDF(messages, title || '', {
-                      chatExportTitle: (p) => tExport('chatExportTitle', p),
-                      exportedOn: tCommon('exportedOn'),
-                      user: tCommon('user'),
-                      assistant: tCommon('assistant'),
-                      citations: tCommon('citations'),
-                    });
+                    await exportAsPDF(
+                      messages,
+                      title || '',
+                      {
+                        chatExportTitle: (p) => tExport('chatExportTitle', p),
+                        exportedOn: tCommon('exportedOn'),
+                        user: tCommon('user'),
+                        assistant: tCommon('assistant'),
+                        citations: tCommon('citations'),
+                      },
+                      locale,
+                    );
                   }}
                 >
                   <FileDown size={17} className="text-[#24A0ED]" />
