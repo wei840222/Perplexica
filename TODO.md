@@ -71,6 +71,8 @@
 - 本機 smoke test 通過（首頁與 Settings 可切換 en / zh-TW）。
 
 - Navbar Share 選單與匯出（Markdown/PDF）內容已 i18n 化。
+- PDF 匯出中文字型：改用本機託管 Noto Sans TC（`public/fonts`），完全移除外網依賴，中文不會亂碼。
+- 匯出 PDF（zh-TW）驗收成功（標題 / 內容 / 參考來源顯示正確）。
 
 ## 下一步規劃（擬）
 
@@ -83,12 +85,33 @@
 
 - 使用 `generateMetadata` + `getTranslations` 提供各語系標題描述
 
-3. Library / Discover 頁的標題與文案 i18n 化
-4. Toaster 與其他零散硬字串抽取到 messages
-5. 型別與工具（可選）
+3. Library / Discover 頁的標題與文案 i18n 化（下一優先）
+
+- 抽出頁面標題、段落、空狀態、按鈕文案到 `pages.library`、`pages.discover` 等命名空間。
+- 收斂搜尋/新聞等部件內的硬字串。
+
+4. Navbar 相對時間字串 i18n 化
+
+- 目前顯示 `{timeAgo} ago`，改為以 `Intl.RelativeTimeFormat` 或 `next-intl` formatter 提供在地化字串（例如 `common.ago` 或完整相對時間）。
+
+5. 日期/時間格式統一
+
+- 以 `Intl.DateTimeFormat(locale, options)` 統一 UI 與匯出（Markdown/PDF）的日期格式，避免瀏覽器預設差異。
+
+6. Toaster 與錯誤訊息 i18n
+
+- 將各處提示/錯誤訊息抽取至 `common.errors`、`common.toasts` 等命名空間。
+
+7. 型別與工具（可選）
 
 - TypeScript augmentation（讓 t(key) 有型別提示）
 - ESLint i18n 規則與 VSCode 訊息檔管理整合
+
+8. 測試與驗證（可選）
+
+- 單元測試：`getRequestConfig` 載入對應語系、messages 取值基本驗證。
+- E2E（Playwright）：語系切換後 UI 文案變化、匯出 PDF/MD 的語系正確性。
+- 煙囪檢查：build、lint、型別、`yarn dev` 啟動與基本互動。
 
 ## 風險與回滾
 

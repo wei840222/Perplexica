@@ -24,6 +24,22 @@
             "title": "聊天 - Perplexica",
             "description": "連上網路聊聊天，和 Perplexica 對話。"
         },
+        "discover": {
+            "title": "探索",
+            "topics": {
+                "tech": "科技與科學",
+                "finance": "財經",
+                "art": "藝術與文化",
+                "sports": "運動",
+                "entertainment": "娛樂"
+            },
+            "errorFetchingData": "取得資料時發生錯誤"
+        },
+        "library": {
+            "title": "資料庫",
+            "empty": "沒有找到任何聊天紀錄。",
+            "ago": "{time} 前"
+        },
         "settings": {
             "title": "設定",
             "sections": {

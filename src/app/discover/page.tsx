@@ -2,6 +2,7 @@
 
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -13,33 +14,21 @@ interface Discover {
   thumbnail: string;
 }
 
-const topics: { key: string; display: string }[] = [
-  {
-    display: 'Tech & Science',
-    key: 'tech',
-  },
-  {
-    display: 'Finance',
-    key: 'finance',
-  },
-  {
-    display: 'Art & Culture',
-    key: 'art',
-  },
-  {
-    display: 'Sports',
-    key: 'sports',
-  },
-  {
-    display: 'Entertainment',
-    key: 'entertainment',
-  },
+const topics: {
+  key: 'tech' | 'finance' | 'art' | 'sports' | 'entertainment';
+}[] = [
+  { key: 'tech' },
+  { key: 'finance' },
+  { key: 'art' },
+  { key: 'sports' },
+  { key: 'entertainment' },
 ];
 
 const Page = () => {
   const [discover, setDiscover] = useState<Discover[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTopic, setActiveTopic] = useState<string>(topics[0].key);
+  const t = useTranslations('pages.discover');
 
   const fetchArticles = async (topic: string) => {
     setLoading(true);
@@ -62,7 +51,7 @@ const Page = () => {
       setDiscover(data.blogs);
     } catch (err: any) {
       console.error('Error fetching data:', err.message);
-      toast.error('Error fetching data');
+      toast.error(t('errorFetchingData'));
     } finally {
       setLoading(false);
     }
@@ -78,24 +67,24 @@ const Page = () => {
         <div className="flex flex-col pt-4">
           <div className="flex items-center">
             <Search />
-            <h1 className="text-3xl font-medium p-2">Discover</h1>
+            <h1 className="text-3xl font-medium p-2">{t('title')}</h1>
           </div>
           <hr className="border-t border-[#2B2C2C] my-4 w-full" />
         </div>
 
         <div className="flex flex-row items-center space-x-2 overflow-x-auto">
-          {topics.map((t, i) => (
+          {topics.map((topic, i) => (
             <div
               key={i}
               className={cn(
                 'border-[0.1px] rounded-full text-sm px-3 py-1 text-nowrap transition duration-200 cursor-pointer',
-                activeTopic === t.key
+                activeTopic === topic.key
                   ? 'text-cyan-300 bg-cyan-300/30 border-cyan-300/60'
                   : 'border-white/30 text-white/70 hover:text-white hover:border-white/40 hover:bg-white/5',
               )}
-              onClick={() => setActiveTopic(t.key)}
+              onClick={() => setActiveTopic(topic.key)}
             >
-              <span>{t.display}</span>
+              <span>{t(`topics.${topic.key}`)}</span>
             </div>
           ))}
         </div>

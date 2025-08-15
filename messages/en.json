@@ -24,6 +24,22 @@
             "title": "Chat - Perplexica",
             "description": "Chat with the internet, chat with Perplexica."
         },
+        "discover": {
+            "title": "Discover",
+            "topics": {
+                "tech": "Tech & Science",
+                "finance": "Finance",
+                "art": "Art & Culture",
+                "sports": "Sports",
+                "entertainment": "Entertainment"
+            },
+            "errorFetchingData": "Error fetching data"
+        },
+        "library": {
+            "title": "Library",
+            "empty": "No chats found.",
+            "ago": "{time} Ago"
+        },
         "settings": {
             "title": "Settings",
             "sections": {
