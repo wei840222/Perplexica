@@ -1,4 +1,13 @@
 {
+    "metadata": {
+        "title": "Perplexica - 與網路對話",
+        "description": "Perplexica 是一個能連上網路的 AI 聊天機器人。"
+    },
+    "manifest": {
+        "name": "Perplexica - 與網路對話",
+        "shortName": "Perplexica",
+        "description": "Perplexica 是一個能連上網路的 AI 聊天機器人。"
+    },
     "navigation": {
         "home": "首頁",
         "discover": "探索",

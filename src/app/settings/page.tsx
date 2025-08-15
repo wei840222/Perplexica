@@ -1,7 +1,7 @@
 'use client';
 
 import { Settings as SettingsIcon, ArrowLeft, Loader2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Switch } from '@headlessui/react';
 import ThemeSwitcher from '@/components/theme/Switcher';
@@ -9,7 +9,7 @@ import { ImagesIcon, VideoIcon } from 'lucide-react';
 import Link from 'next/link';
 import { PROVIDER_METADATA } from '@/lib/providers';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface SettingsType {
   chatModelProviders: {
@@ -131,6 +131,7 @@ const SettingsSection = ({
 
 const Page = () => {
   const t = useTranslations('pages.settings');
+  const locale = useLocale();
   const [config, setConfig] = useState<SettingsType | null>(null);
   const [chatModels, setChatModels] = useState<Record<string, any>>({});
   const [embeddingModels, setEmbeddingModels] = useState<Record<string, any>>(
@@ -214,7 +215,8 @@ const Page = () => {
         localStorage.getItem('autoVideoSearch') === 'true',
       );
 
-      setSystemInstructions(localStorage.getItem('systemInstructions')!);
+      const stored = localStorage.getItem('systemInstructions') || '';
+      setSystemInstructions(stripPrefixedPrompt(stored));
 
       setMeasureUnit(
         localStorage.getItem('measureUnit')! as 'Imperial' | 'Metric',
@@ -224,6 +226,46 @@ const Page = () => {
     };
 
     fetchConfig();
+  }, []);
+
+  // Remove prefix for UI display if it exists in stored value
+  const stripPrefixedPrompt = (text: string) => {
+    const trimmed = (text || '').trim();
+    const starts =
+      'Always respond to all non-code content and explanations in {';
+    if (trimmed.startsWith(starts)) {
+      const parts = trimmed.split('\n\n');
+      // Drop the first block (prefix paragraph and rules)
+      const rest = parts.slice(1).join('\n\n');
+      return rest || '';
+    }
+    return trimmed;
+  };
+
+  const getLocaleName = (loc: string) => {
+    const l = (loc || '').toLowerCase();
+    if (l.startsWith('zh') && (l.includes('tw') || l.includes('hant'))) {
+      return 'Traditional Chinese';
+    }
+    return 'English';
+  };
+
+  const buildPrefixedPrompt = useCallback((base: string, loc: string) => {
+    const langName = getLocaleName(loc);
+    const prefix = `Always respond to all non-code content and explanations in {${langName}}.\nRules:\n1. All descriptions, explanations, and example clarifications must be in {${langName}}.\n2. Any content inside code blocks and code comments must be entirely in English.\n3. For language-specific or technical terms, use the original term in that specific language (do not translate it).`;
+    const trimmed = (base || '').trim();
+    // If already starts with the prefix (by simple inclusion of first sentence), avoid duplicating
+    if (
+      trimmed.startsWith(
+        `Always respond to all non-code content and explanations in {`,
+      )
+    ) {
+      // If locale changed, replace the existing first paragraph block
+      const parts = trimmed.split('\n\n');
+      const rest = parts.slice(1).join('\n\n');
+      return `${prefix}${rest ? '\n\n' + rest : ''}`;
+    }
+    return prefix + (trimmed ? `\n\n${trimmed}` : '');
   }, []);
 
   const saveConfig = async (key: string, value: any) => {
@@ -461,7 +503,16 @@ const Page = () => {
                 <p className="text-black/70 dark:text-white/70 text-sm">
                   {t('preferences.language')}
                 </p>
-                <LocaleSwitcher />
+                <LocaleSwitcher
+                  onChange={(nextLocale) => {
+                    // Rebuild and persist with new locale prefix; keep UI clean
+                    const prefixed = buildPrefixedPrompt(
+                      systemInstructions,
+                      nextLocale,
+                    );
+                    saveConfig('systemInstructions', prefixed);
+                  }}
+                />
               </div>
             </SettingsSection>
 
@@ -559,7 +610,12 @@ const Page = () => {
                   onChange={(e) => {
                     setSystemInstructions(e.target.value);
                   }}
-                  onSave={(value) => saveConfig('systemInstructions', value)}
+                  onSave={(value) => {
+                    const prefixed = buildPrefixedPrompt(value, locale);
+                    // Keep UI as user input without prefix
+                    setSystemInstructions(value);
+                    saveConfig('systemInstructions', prefixed);
+                  }}
                   placeholder={t('systemInstructions.placeholder')}
                 />
               </div>

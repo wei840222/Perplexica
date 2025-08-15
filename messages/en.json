@@ -1,4 +1,13 @@
 {
+    "metadata": {
+        "title": "Perplexica - Chat with the internet",
+        "description": "Perplexica is an AI powered chatbot that is connected to the internet."
+    },
+    "manifest": {
+        "name": "Perplexica - Chat with the internet",
+        "shortName": "Perplexica",
+        "description": "Perplexica is an AI powered chatbot that is connected to the internet."
+    },
     "navigation": {
         "home": "Home",
         "discover": "Discover",

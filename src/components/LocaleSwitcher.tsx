@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 const LOCALES = ['en', 'zh-TW'] as const;
 
-type AppLocale = (typeof LOCALES)[number];
+export type AppLocale = (typeof LOCALES)[number];
 
 function setLocaleCookie(value: AppLocale) {
   const oneYear = 60 * 60 * 24 * 365;
@@ -15,7 +15,11 @@ function setLocaleCookie(value: AppLocale) {
   document.cookie = `locale=${value}; path=/; max-age=${oneYear}; samesite=lax${isSecure ? '; secure' : ''}`;
 }
 
-export default function LocaleSwitcher() {
+export default function LocaleSwitcher({
+  onChange,
+}: {
+  onChange?: (next: AppLocale) => void;
+}) {
   const router = useRouter();
   const current = useLocale();
   const currentLocale: AppLocale = useMemo(() => {
@@ -37,6 +41,7 @@ export default function LocaleSwitcher() {
         const next = e.target.value as AppLocale;
         setValue(next);
         setLocaleCookie(next);
+        onChange?.(next);
         router.refresh();
       }}
       className={
