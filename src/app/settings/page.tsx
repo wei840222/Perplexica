@@ -8,6 +8,7 @@ import ThemeSwitcher from '@/components/theme/Switcher';
 import { ImagesIcon, VideoIcon } from 'lucide-react';
 import Link from 'next/link';
 import { PROVIDER_METADATA } from '@/lib/providers';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
 
 interface SettingsType {
   chatModelProviders: {
@@ -453,6 +454,12 @@ const Page = () => {
                     },
                   ]}
                 />
+              </div>
+              <div className="flex flex-col space-y-1">
+                <p className="text-black/70 dark:text-white/70 text-sm">
+                  Language
+                </p>
+                <LocaleSwitcher />
               </div>
             </SettingsSection>
 
