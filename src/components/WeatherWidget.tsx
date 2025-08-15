@@ -1,5 +1,6 @@
 import { Cloud, Sun, CloudRain, CloudSnow, Wind } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 
 const WeatherWidget = () => {
@@ -128,9 +129,11 @@ const WeatherWidget = () => {
       ) : (
         <>
           <div className="flex flex-col items-center justify-center w-16 min-w-16 max-w-16 h-full">
-            <img
+            <Image
               src={`/weather-ico/${data.icon}.svg`}
               alt={data.condition}
+              width={40}
+              height={40}
               className="h-10 w-auto"
             />
             <span className="text-base font-semibold text-black dark:text-white">

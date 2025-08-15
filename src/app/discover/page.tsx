@@ -4,6 +4,7 @@ import { Search } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import Image from 'next/image';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
@@ -121,15 +122,20 @@ const Page = () => {
                   className="max-w-sm rounded-lg overflow-hidden bg-light-secondary dark:bg-dark-secondary hover:-translate-y-[1px] transition duration-200"
                   target="_blank"
                 >
-                  <img
-                    className="object-cover w-full aspect-video"
-                    src={
-                      new URL(item.thumbnail).origin +
-                      new URL(item.thumbnail).pathname +
-                      `?id=${new URL(item.thumbnail).searchParams.get('id')}`
-                    }
-                    alt={item.title}
-                  />
+                  <div className="relative w-full aspect-video">
+                    <Image
+                      fill
+                      unoptimized
+                      className="object-cover"
+                      src={
+                        new URL(item.thumbnail).origin +
+                        new URL(item.thumbnail).pathname +
+                        `?id=${new URL(item.thumbnail).searchParams.get('id')}`
+                      }
+                      alt={item.title}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  </div>
                   <div className="px-6 py-4">
                     <div className="font-bold text-lg mb-2">
                       {item.title.slice(0, 100)}...
