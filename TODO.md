@@ -70,14 +70,16 @@
 - Sidebar 與 Settings 頁字串已 i18n 化；LocaleSwitcher 已上線並運作正常。
 - 本機 smoke test 通過（首頁與 Settings 可切換 en / zh-TW）。
 
+- Navbar Share 選單與匯出（Markdown/PDF）內容已 i18n 化。
+
 ## 下一步規劃（擬）
 
-1. Navbar 與匯出相關字串 i18n 化
+1. Navbar 與匯出相關字串 i18n 化（已完成）
 
 - 選單項：Export as Markdown / Export as PDF
-- 匯出內容：Chat Export 標題、Exported on、User/Assistant、Citations（部分 key 已有，可補齊缺漏）
+- 匯出內容：Chat Export 標題、Exported on、User/Assistant、Citations（部分 key 已有，現已串接）
 
-2. 首頁文案與 metadata 國際化
+2. 首頁文案與 metadata 國際化（首頁已完成）
 
 - 使用 `generateMetadata` + `getTranslations` 提供各語系標題描述
 

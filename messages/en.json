@@ -12,6 +12,13 @@
         "user": "User",
         "assistant": "Assistant"
     },
+    "navbar": {
+        "exportAsMarkdown": "Export as Markdown",
+        "exportAsPDF": "Export as PDF"
+    },
+    "export": {
+        "chatExportTitle": "Chat Export: {title}"
+    },
     "pages": {
         "home": {
             "title": "Chat - Perplexica",
