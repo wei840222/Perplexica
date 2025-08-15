@@ -35,6 +35,38 @@
     "export": {
         "chatExportTitle": "聊天匯出：{title}"
     },
+    "weather": {
+        "conditions": {
+            "clear": "晴朗",
+            "mainlyClear": "大致晴朗",
+            "partlyCloudy": "局部多雲",
+            "cloudy": "多雲",
+            "fog": "霧",
+            "lightDrizzle": "小毛毛雨",
+            "moderateDrizzle": "中等毛毛雨",
+            "denseDrizzle": "大毛毛雨",
+            "lightFreezingDrizzle": "輕微冰霧雨",
+            "denseFreezingDrizzle": "強冰霧雨",
+            "slightRain": "小雨",
+            "moderateRain": "中雨",
+            "heavyRain": "大雨",
+            "lightFreezingRain": "輕微凍雨",
+            "heavyFreezingRain": "強凍雨",
+            "slightSnowFall": "小雪",
+            "moderateSnowFall": "中雪",
+            "heavySnowFall": "大雪",
+            "snow": "降雪",
+            "slightRainShowers": "短暫小雨",
+            "moderateRainShowers": "短暫中雨",
+            "heavyRainShowers": "短暫大雨",
+            "slightSnowShowers": "短暫小雪",
+            "moderateSnowShowers": "短暫中雪",
+            "heavySnowShowers": "短暫大雪",
+            "thunderstorm": "雷雨",
+            "thunderstormSlightHail": "雷雨伴隨小冰雹",
+            "thunderstormHeavyHail": "雷雨伴隨大冰雹"
+        }
+    },
     "pages": {
         "home": {
             "title": "聊天 - Perplexica",

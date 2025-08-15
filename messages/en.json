@@ -35,6 +35,38 @@
     "export": {
         "chatExportTitle": "Chat Export: {title}"
     },
+    "weather": {
+        "conditions": {
+            "clear": "Clear",
+            "mainlyClear": "Mainly Clear",
+            "partlyCloudy": "Partly Cloudy",
+            "cloudy": "Cloudy",
+            "fog": "Fog",
+            "lightDrizzle": "Light Drizzle",
+            "moderateDrizzle": "Moderate Drizzle",
+            "denseDrizzle": "Dense Drizzle",
+            "lightFreezingDrizzle": "Light Freezing Drizzle",
+            "denseFreezingDrizzle": "Dense Freezing Drizzle",
+            "slightRain": "Slight Rain",
+            "moderateRain": "Moderate Rain",
+            "heavyRain": "Heavy Rain",
+            "lightFreezingRain": "Light Freezing Rain",
+            "heavyFreezingRain": "Heavy Freezing Rain",
+            "slightSnowFall": "Slight Snow Fall",
+            "moderateSnowFall": "Moderate Snow Fall",
+            "heavySnowFall": "Heavy Snow Fall",
+            "snow": "Snow",
+            "slightRainShowers": "Slight Rain Showers",
+            "moderateRainShowers": "Moderate Rain Showers",
+            "heavyRainShowers": "Heavy Rain Showers",
+            "slightSnowShowers": "Slight Snow Showers",
+            "moderateSnowShowers": "Moderate Snow Showers",
+            "heavySnowShowers": "Heavy Snow Showers",
+            "thunderstorm": "Thunderstorm",
+            "thunderstormSlightHail": "Thunderstorm with Slight Hail",
+            "thunderstormHeavyHail": "Thunderstorm with Heavy Hail"
+        }
+    },
     "pages": {
         "home": {
             "title": "Chat - Perplexica",
