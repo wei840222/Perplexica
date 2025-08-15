@@ -97,8 +97,16 @@
         }
     },
     "components": {
+        "common": {
+            "viewMore": "View {count} more"
+        },
         "messageInput": {
             "placeholder": "Ask a follow-up"
+        },
+        "messageBox": {
+            "sources": "Sources",
+            "answer": "Answer",
+            "related": "Related"
         },
         "copilot": {
             "label": "Copilot"
@@ -155,6 +163,26 @@
                     "description": "Get the most thorough and accurate answer"
                 }
             }
+        },
+        "messageActions": {
+            "rewrite": "Rewrite"
+        },
+        "searchImages": {
+            "searchButton": "Search images"
+        },
+        "searchVideos": {
+            "searchButton": "Search videos",
+            "badge": "Video"
+        },
+        "weather": {
+            "humidity": "Humidity",
+            "now": "Now"
+        },
+        "newsArticleWidget": {
+            "error": "Could not load news."
+        },
+        "emptyChat": {
+            "title": "Research begins here."
         }
     }
 }

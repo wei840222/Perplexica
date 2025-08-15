@@ -1,7 +1,9 @@
 import { Cloud, Sun, CloudRain, CloudSnow, Wind } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 const WeatherWidget = () => {
+  const t = useTranslations('components');
   const [data, setData] = useState({
     temperature: 0,
     condition: '',
@@ -148,8 +150,10 @@ const WeatherWidget = () => {
               {data.condition}
             </span>
             <div className="flex flex-row justify-between w-full mt-auto pt-1 border-t border-light-200 dark:border-dark-200 text-xs text-black/60 dark:text-white/60">
-              <span>Humidity: {data.humidity}%</span>
-              <span>Now</span>
+              <span>
+                {t('weather.humidity')}: {data.humidity}%
+              </span>
+              <span>{t('weather.now')}</span>
             </div>
           </div>
         </>

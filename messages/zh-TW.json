@@ -97,8 +97,16 @@
         }
     },
     "components": {
+        "common": {
+            "viewMore": "查看另外 {count} 項"
+        },
         "messageInput": {
             "placeholder": "提出追問"
+        },
+        "messageBox": {
+            "sources": "參考來源",
+            "answer": "回答",
+            "related": "相關內容"
         },
         "copilot": {
             "label": "Copilot"
@@ -155,6 +163,26 @@
                     "description": "取得最完整與最精確的回答"
                 }
             }
+        },
+        "messageActions": {
+            "rewrite": "重寫"
+        },
+        "searchImages": {
+            "searchButton": "搜尋圖片"
+        },
+        "searchVideos": {
+            "searchButton": "搜尋影片",
+            "badge": "影片"
+        },
+        "weather": {
+            "humidity": "濕度",
+            "now": "現在"
+        },
+        "newsArticleWidget": {
+            "error": "無法載入新聞。"
+        },
+        "emptyChat": {
+            "title": "研究從這裡開始。"
         }
     }
 }
