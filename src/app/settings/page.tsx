@@ -718,8 +718,7 @@ const Page = () => {
                         {t('model.custom.apiKey')}
                       </p>
                       <Input
-                        type="text"
-                        placeholder={t('model.custom.apiKey')}
+                        type="password"
                         value={config.customOpenaiApiKey}
                         isSaving={savingStates['customOpenaiApiKey']}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -839,8 +838,7 @@ const Page = () => {
                     {t('api.openaiApiKey')}
                   </p>
                   <Input
-                    type="text"
-                    placeholder={t('api.openaiApiKey')}
+                    type="password"
                     value={config.openaiApiKey}
                     isSaving={savingStates['openaiApiKey']}
                     onChange={(e) => {
@@ -877,8 +875,7 @@ const Page = () => {
                     {t('api.groqApiKey')}
                   </p>
                   <Input
-                    type="text"
-                    placeholder={t('api.groqApiKey')}
+                    type="password"
                     value={config.groqApiKey}
                     isSaving={savingStates['groqApiKey']}
                     onChange={(e) => {
@@ -896,8 +893,7 @@ const Page = () => {
                     {t('api.anthropicApiKey')}
                   </p>
                   <Input
-                    type="text"
-                    placeholder={t('api.anthropicApiKey')}
+                    type="password"
                     value={config.anthropicApiKey}
                     isSaving={savingStates['anthropicApiKey']}
                     onChange={(e) => {
@@ -915,8 +911,7 @@ const Page = () => {
                     {t('api.geminiApiKey')}
                   </p>
                   <Input
-                    type="text"
-                    placeholder={t('api.geminiApiKey')}
+                    type="password"
                     value={config.geminiApiKey}
                     isSaving={savingStates['geminiApiKey']}
                     onChange={(e) => {
@@ -934,8 +929,7 @@ const Page = () => {
                     {t('api.deepseekApiKey')}
                   </p>
                   <Input
-                    type="text"
-                    placeholder={t('api.deepseekApiKey')}
+                    type="password"
                     value={config.deepseekApiKey}
                     isSaving={savingStates['deepseekApiKey']}
                     onChange={(e) => {
@@ -953,8 +947,7 @@ const Page = () => {
                     {t('api.aimlApiKey')}
                   </p>
                   <Input
-                    type="text"
-                    placeholder={t('api.aimlApiKey')}
+                    type="password"
                     value={config.aimlApiKey}
                     isSaving={savingStates['aimlApiKey']}
                     onChange={(e) => {
