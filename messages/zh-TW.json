@@ -16,6 +16,61 @@
         "home": {
             "title": "聊天 - Perplexica",
             "description": "連上網路聊聊天，和 Perplexica 對話。"
+        },
+        "settings": {
+            "title": "設定",
+            "sections": {
+                "preferences": "偏好設定",
+                "automaticSearch": "自動搜尋",
+                "systemInstructions": "系統指示",
+                "modelSettings": "模型設定",
+                "apiKeys": "API 金鑰"
+            },
+            "preferences": {
+                "theme": "主題",
+                "measurementUnits": "度量單位",
+                "language": "語言",
+                "metric": "公制",
+                "imperial": "英制"
+            },
+            "automaticSearch": {
+                "image": {
+                    "title": "自動圖片搜尋",
+                    "desc": "在聊天回應中自動搜尋相關圖片"
+                },
+                "video": {
+                    "title": "自動影片搜尋",
+                    "desc": "在聊天回應中自動搜尋相關影片"
+                }
+            },
+            "model": {
+                "chatProvider": "聊天模型供應商",
+                "chat": "聊天模型",
+                "noModels": "沒有可用的模型",
+                "invalidProvider": "供應商無效，請檢查後端日誌",
+                "custom": {
+                    "modelName": "模型名稱",
+                    "apiKey": "自訂 OpenAI API 金鑰",
+                    "baseUrl": "自訂 OpenAI Base URL"
+                }
+            },
+            "embedding": {
+                "provider": "向量嵌入供應商",
+                "model": "向量嵌入模型"
+            },
+            "api": {
+                "openaiApiKey": "OpenAI API 金鑰",
+                "ollamaApiUrl": "Ollama API 位址",
+                "groqApiKey": "GROQ API 金鑰",
+                "anthropicApiKey": "Anthropic API 金鑰",
+                "geminiApiKey": "Gemini API 金鑰",
+                "deepseekApiKey": "Deepseek API 金鑰",
+                "aimlApiKey": "AI/ML API 金鑰",
+                "lmStudioApiUrl": "LM Studio API 位址"
+            },
+            "systemInstructions": {
+                "placeholder": "任何要給 LLM 的特別指示"
+            }
         }
     }
 }

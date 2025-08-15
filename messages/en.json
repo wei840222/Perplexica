@@ -16,6 +16,61 @@
         "home": {
             "title": "Chat - Perplexica",
             "description": "Chat with the internet, chat with Perplexica."
+        },
+        "settings": {
+            "title": "Settings",
+            "sections": {
+                "preferences": "Preferences",
+                "automaticSearch": "Automatic Search",
+                "systemInstructions": "System Instructions",
+                "modelSettings": "Model Settings",
+                "apiKeys": "API Keys"
+            },
+            "preferences": {
+                "theme": "Theme",
+                "measurementUnits": "Measurement Units",
+                "language": "Language",
+                "metric": "Metric",
+                "imperial": "Imperial"
+            },
+            "automaticSearch": {
+                "image": {
+                    "title": "Automatic Image Search",
+                    "desc": "Automatically search for relevant images in chat responses"
+                },
+                "video": {
+                    "title": "Automatic Video Search",
+                    "desc": "Automatically search for relevant videos in chat responses"
+                }
+            },
+            "model": {
+                "chatProvider": "Chat Model Provider",
+                "chat": "Chat Model",
+                "noModels": "No models available",
+                "invalidProvider": "Invalid provider, please check backend logs",
+                "custom": {
+                    "modelName": "Model Name",
+                    "apiKey": "Custom OpenAI API Key",
+                    "baseUrl": "Custom OpenAI Base URL"
+                }
+            },
+            "embedding": {
+                "provider": "Embedding Model Provider",
+                "model": "Embedding Model"
+            },
+            "api": {
+                "openaiApiKey": "OpenAI API Key",
+                "ollamaApiUrl": "Ollama API URL",
+                "groqApiKey": "GROQ API Key",
+                "anthropicApiKey": "Anthropic API Key",
+                "geminiApiKey": "Gemini API Key",
+                "deepseekApiKey": "Deepseek API Key",
+                "aimlApiKey": "AI/ML API Key",
+                "lmStudioApiUrl": "LM Studio API URL"
+            },
+            "systemInstructions": {
+                "placeholder": "Any special instructions for the LLM"
+            }
         }
     }
 }
