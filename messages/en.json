@@ -183,6 +183,15 @@
         },
         "emptyChat": {
             "title": "Research begins here."
+        },
+        "emptyChatMessageInput": {
+            "placeholder": "Ask anything..."
+        },
+        "themeSwitcher": {
+            "options": {
+                "light": "Light",
+                "dark": "Dark"
+            }
         }
     }
 }

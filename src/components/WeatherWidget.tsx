@@ -1,9 +1,10 @@
 import { Cloud, Sun, CloudRain, CloudSnow, Wind } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const WeatherWidget = () => {
   const t = useTranslations('components');
+  const locale = useLocale();
   const [data, setData] = useState({
     temperature: 0,
     condition: '',
@@ -44,7 +45,7 @@ const WeatherWidget = () => {
         if (result.state === 'granted') {
           navigator.geolocation.getCurrentPosition(async (position) => {
             const res = await fetch(
-              `https://api-bdc.io/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`,
+              `https://api-bdc.io/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=${locale}`,
               {
                 method: 'GET',
                 headers: {

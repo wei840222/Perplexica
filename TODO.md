@@ -4,7 +4,7 @@
 
 ## 目標
 
-- 導入 next-intl（v3 插件）以提供 request-scoped 的 locale 與 messages。
+- 導入 next-intl（v4 插件）以提供 request-scoped 的 locale 與 messages。
 - 在 Client Components 使用 `useTranslations`，在 Server Components 使用 `getTranslations`。
 - 先完成最小可行整合（Sidebar 與首頁），其他字串逐步轉換。
 
@@ -12,12 +12,12 @@
 
 - 最小可行：Sidebar 導覽與常用字串 i18n（en / zh-TW）。
 - 進度：Settings 頁首波 i18n 已完成（標題、區塊標題、主要表單標籤與說明、placeholder）。
-- 後續：Library、Discover、Toaster、Navbar、PDF 匯出等字串逐步抽取。
+- 後續：Library、Discover、Navbar、PDF 匯出與各元件字串逐步抽取；Toaster/錯誤訊息規劃中。
 
 ## 套件與版本
 
 - next: ^15.2.2（現有）
-- next-intl: 新增（以 yarn 安裝）
+- next-intl: ^4（已安裝）
 
 ## 設計要點
 
@@ -27,6 +27,7 @@
   - `navigation`: `{ home, discover, library, settings }`
   - `common`: `{ appName, exportedOn, citations, user, assistant }`
   - `pages.home`: `{ title, description }`
+  - `components`: 各通用元件文案（messageInput, attach, focus, optimization, messageBox, messageActions, searchImages, searchVideos, weather, newsArticleWidget, emptyChat, common.viewMore）
 
 ## 需新增/修改檔案
 
@@ -40,6 +41,10 @@
   - `src/components/Sidebar.tsx`（導覽標籤改用 `useTranslations('navigation')`）
 - 可選後續：
   - `src/components/LocaleSwitcher.tsx`（cookie-based 切換語系，切完 `router.refresh()`）
+- 新增工具與支援：
+  - `src/lib/utils.ts`（`formatRelativeTime`、`formatDate`）
+  - `src/lib/pdfFont.ts`（匯出 PDF 之中文字型註冊 Noto Sans TC，本機託管）
+  - `src/components/Navbar.tsx`（分享/匯出整合與在地化、改用 `formatDate` 並以 `useLocale` 提供語系）
 
 ## 執行步驟（建議以小步提交）
 
@@ -53,6 +58,23 @@
 - [x] chore/test: `yarn dev` 本機驗證顯示；cookie `locale=zh-TW` 驗證中文
 - [x] feat: 新增 `LocaleSwitcher`（cookie-based），放於 Settings → Preferences
 - [x] feat(settings): Settings 頁主要字串 i18n 化（標題、區塊標題、欄位與說明、placeholder）
+      // --- 已完成的後續工作 ---
+- [x] feat(pages): 首頁 metadata i18n（`generateMetadata` + `getTranslations`）
+- [x] feat(navbar/export): Navbar 分享/匯出（Markdown/PDF）i18n；PDF 改用本機 Noto Sans TC 字型，移除外網依賴；匯出日期使用 `formatDate`，語系取自 `useLocale`
+- [x] feat(pages.discover): 標題、topics、錯誤訊息 i18n；Loading 維持 SVG 動畫（不使用 i18n 文案）
+- [x] feat(pages.library): 標題、空狀態 i18n；相對時間在地化；Loading 維持 SVG 動畫（不使用 i18n 文案）
+- [x] feat(utils): 新增 `formatRelativeTime`、`formatDate` 並導入使用
+- [x] fix(messages): 將 `components` 命名空間移至 messages 根層，修復 zh-TW MISSING_MESSAGE
+- [x] feat(components Step 1): MessageInput 與 MessageInputActions（Attach、AttachSmall、Copilot、Focus、Optimization）抽字串與在地化（命名空間：`components.*`）
+- [x] feat(components Step 2+): 其他元件抽字串與在地化：
+  - MessageBox（`Sources`、`Answer`、`Related`）
+  - MessageActions：Rewrite 按鈕、Copy 複製的 `Citations` 標題
+  - MessageSources（Dialog 標題、`View N more`）
+  - SearchImages / SearchVideos（搜尋按鈕、Video 徽章、`View N more`）
+  - EmptyChat 首屏標題
+  - NewsArticleWidget 錯誤訊息
+  - WeatherWidget（`Humidity`、`Now`）
+- [x] chore: Loading 指示統一維持 SVG 動畫，移除 `common.loading` 相關文案
 
 ## 驗證步驟（Smoke Test）
 
@@ -74,6 +96,10 @@
 - PDF 匯出中文字型：改用本機託管 Noto Sans TC（`public/fonts`），完全移除外網依賴，中文不會亂碼。
 - 匯出 PDF（zh-TW）驗收成功（標題 / 內容 / 參考來源顯示正確）。
 
+- Discover / Library 已完成頁面文案 i18n；相對時間以 `Intl.RelativeTimeFormat` 實作並已在兩語系驗證。
+- 匯出時間與 UI 的日期格式統一由 `formatDate` 提供（匯出已套用；UI 可逐步導入）。
+- 元件層面已完成多數常見元件字串抽取（詳見上方 Checklist）。
+
 ## 下一步規劃（擬）
 
 1. Navbar 與匯出相關字串 i18n 化（已完成）
@@ -85,31 +111,31 @@
 
 - 使用 `generateMetadata` + `getTranslations` 提供各語系標題描述
 
-3. Library / Discover 頁的標題與文案 i18n 化（進度：已抽出標題、topics、錯誤訊息；補上 loading 國際化）
+3. Library / Discover 頁的標題與文案 i18n 化（進度：已抽出標題、topics、錯誤訊息；Loading 維持 SVG，不做 i18n）
 
 - 抽出頁面標題、段落、空狀態、按鈕文案到 `pages.library`、`pages.discover` 等命名空間。
 - 收斂搜尋/新聞等部件內的硬字串。
 - 新增 `common.loading`，Discover / Library 的 loading 已改為使用 i18n 文案；Discover 的 `useEffect` 相依性警告已以 `useCallback` 修正。
 
-4. Navbar 相對時間字串 i18n 化
+4. Navbar 相對時間字串 i18n 化（已完成）
 
 - 目前顯示 `{timeAgo} ago`，改為以 `Intl.RelativeTimeFormat` 或 `next-intl` formatter 提供在地化字串（例如 `common.ago` 或完整相對時間）。
   - 進度：已導入 `formatRelativeTime` 並在 Library 與 Navbar 套用，英文/中文顯示正確（避免未來時）。
 
-5. 日期/時間格式統一
+5. 日期/時間格式統一（部分完成）
 
 - 以 `Intl.DateTimeFormat(locale, options)` 統一 UI 與匯出（Markdown/PDF）的日期格式，避免瀏覽器預設差異。
 
-6. Toaster 與錯誤訊息 i18n
+6. Toaster 與錯誤訊息 i18n（未開始）
 
 - 將各處提示/錯誤訊息抽取至 `common.errors`、`common.toasts` 等命名空間。
 
-7. 型別與工具（可選）
+7. 型別與工具（可選，未開始）
 
 - TypeScript augmentation（讓 t(key) 有型別提示）
 - ESLint i18n 規則與 VSCode 訊息檔管理整合
 
-8. 測試與驗證（可選）
+8. 測試與驗證（可選，未開始）
 
 - 單元測試：`getRequestConfig` 載入對應語系、messages 取值基本驗證。
 - E2E（Playwright）：語系切換後 UI 文案變化、匯出 PDF/MD 的語系正確性。
@@ -123,5 +149,6 @@
 ## 後續工作
 
 - Pages 的 metadata 國際化：改為 `generateMetadata` + `getTranslations`。
+- 繼續元件 i18n 掃描：MessageBoxLoading、ThinkBox、MessageActions 其餘項目等。
 - 全站字串逐步抽取至 messages，統一 key 命名規範。
 - 型別增強：TypeScript augmentation 與 ESLint i18n 規則（可選）。

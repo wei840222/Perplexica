@@ -183,6 +183,15 @@
         },
         "emptyChat": {
             "title": "研究從這裡開始。"
+        },
+        "emptyChatMessageInput": {
+            "placeholder": "問我任何事..."
+        },
+        "themeSwitcher": {
+            "options": {
+                "light": "淺色",
+                "dark": "深色"
+            }
         }
     }
 }
