@@ -100,55 +100,11 @@
 - 匯出時間與 UI 的日期格式統一由 `formatDate` 提供（匯出已套用；UI 可逐步導入）。
 - 元件層面已完成多數常見元件字串抽取（詳見上方 Checklist）。
 
-## 下一步規劃（擬）
-
-1. Navbar 與匯出相關字串 i18n 化（已完成）
-
-- 選單項：Export as Markdown / Export as PDF
-- 匯出內容：Chat Export 標題、Exported on、User/Assistant、Citations（部分 key 已有，現已串接）
-
-2. 首頁文案與 metadata 國際化（首頁已完成）
-
-- 使用 `generateMetadata` + `getTranslations` 提供各語系標題描述
-
-3. Library / Discover 頁的標題與文案 i18n 化（進度：已抽出標題、topics、錯誤訊息；Loading 維持 SVG，不做 i18n）
-
-- 抽出頁面標題、段落、空狀態、按鈕文案到 `pages.library`、`pages.discover` 等命名空間。
-- 收斂搜尋/新聞等部件內的硬字串。
-- 新增 `common.loading`，Discover / Library 的 loading 已改為使用 i18n 文案；Discover 的 `useEffect` 相依性警告已以 `useCallback` 修正。
-
-4. Navbar 相對時間字串 i18n 化（已完成）
-
-- 目前顯示 `{timeAgo} ago`，改為以 `Intl.RelativeTimeFormat` 或 `next-intl` formatter 提供在地化字串（例如 `common.ago` 或完整相對時間）。
-  - 進度：已導入 `formatRelativeTime` 並在 Library 與 Navbar 套用，英文/中文顯示正確（避免未來時）。
-
-5. 日期/時間格式統一（部分完成）
-
-- 以 `Intl.DateTimeFormat(locale, options)` 統一 UI 與匯出（Markdown/PDF）的日期格式，避免瀏覽器預設差異。
-
-6. Toaster 與錯誤訊息 i18n（未開始）
-
-- 將各處提示/錯誤訊息抽取至 `common.errors`、`common.toasts` 等命名空間。
-
-7. 型別與工具（可選，未開始）
-
-- TypeScript augmentation（讓 t(key) 有型別提示）
-- ESLint i18n 規則與 VSCode 訊息檔管理整合
-
-8. 測試與驗證（可選，未開始）
-
-- 單元測試：`getRequestConfig` 載入對應語系、messages 取值基本驗證。
-- E2E（Playwright）：語系切換後 UI 文案變化、匯出 PDF/MD 的語系正確性。
-- 煙囪檢查：build、lint、型別、`yarn dev` 啟動與基本互動。
-
-## 風險與回滾
-
-- 插件導入可能影響 `next.config.mjs` 載入順序：變更僅包裝 `nextConfig`，如有異常可暫時移除 plugin 驗證。
-- 若發生 runtime 無法解析 messages，先確認 `src/i18n/request.ts` 匯入路徑與 `locale` 值（cookie）是否正確。
+- 首頁文案與 metadata 國際化已完成（`generateMetadata` + `getTranslations`）。
+- Navbar 相對時間字串已在地化（使用 `formatRelativeTime`）。
+- 日期/時間格式統一：本輪掃描完成，Navbar/匯出皆使用 `formatDate`（UI 新增處請沿用）。
 
 ## 後續工作
 
-- Pages 的 metadata 國際化：改為 `generateMetadata` + `getTranslations`。
 - 繼續元件 i18n 掃描：MessageBoxLoading、ThinkBox、MessageActions 其餘項目等。
 - 全站字串逐步抽取至 messages，統一 key 命名規範。
-- 型別增強：TypeScript augmentation 與 ESLint i18n 規則（可選）。

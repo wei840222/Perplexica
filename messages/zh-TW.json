@@ -10,7 +10,14 @@
         "exportedOn": "匯出日期：",
         "citations": "參考來源：",
         "user": "使用者",
-        "assistant": "助理"
+        "assistant": "助理",
+        "errors": {
+            "noChatModelsAvailable": "沒有可用的聊天模型",
+            "chatProviderNotConfigured": "看起來你還沒有設定任何聊天模型供應商，請至設定頁或設定檔進行設定。",
+            "noEmbeddingModelsAvailable": "沒有可用的向量嵌入模型",
+            "cannotSendBeforeConfigReady": "在設定就緒前無法送出訊息",
+            "failedToDeleteChat": "刪除聊天失敗"
+        }
     },
     "navbar": {
         "exportAsMarkdown": "匯出為 Markdown",
@@ -186,6 +193,12 @@
         },
         "emptyChatMessageInput": {
             "placeholder": "問我任何事..."
+        },
+        "deleteChat": {
+            "title": "刪除確認",
+            "description": "確定要刪除此聊天嗎？",
+            "cancel": "取消",
+            "delete": "刪除"
         },
         "themeSwitcher": {
             "options": {
