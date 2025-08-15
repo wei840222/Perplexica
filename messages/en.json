@@ -1,0 +1,21 @@
+{
+    "navigation": {
+        "home": "Home",
+        "discover": "Discover",
+        "library": "Library",
+        "settings": "Settings"
+    },
+    "common": {
+        "appName": "Perplexica",
+        "exportedOn": "Exported on:",
+        "citations": "Citations:",
+        "user": "User",
+        "assistant": "Assistant"
+    },
+    "pages": {
+        "home": {
+            "title": "Chat - Perplexica",
+            "description": "Chat with the internet, chat with Perplexica."
+        }
+    }
+}

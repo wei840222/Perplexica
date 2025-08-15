@@ -1,0 +1,21 @@
+{
+    "navigation": {
+        "home": "首頁",
+        "discover": "探索",
+        "library": "資料庫",
+        "settings": "設定"
+    },
+    "common": {
+        "appName": "Perplexica",
+        "exportedOn": "匯出日期：",
+        "citations": "參考來源：",
+        "user": "使用者",
+        "assistant": "助理"
+    },
+    "pages": {
+        "home": {
+            "title": "聊天 - Perplexica",
+            "description": "連上網路聊聊天，和 Perplexica 對話。"
+        }
+    }
+}
