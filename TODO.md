@@ -108,3 +108,8 @@
 
 - 繼續元件 i18n 掃描：MessageBoxLoading、ThinkBox、MessageActions 其餘項目等。
 - 全站字串逐步抽取至 messages，統一 key 命名規範。
+
+- 擴充語系：擴充 `src/i18n/locales.ts` 內的 `LOCALES` 與 `LOCALE_LABELS` 支援更多語言（如：zh-CN、ja、ko、fr、de…）。
+  - 新增對應的 `messages/<locale>.json` 檔並補齊必要字串。
+  - 更新 Accept-Language 解析對應（`src/i18n/request.ts`）以正確匹配新增語系。
+  - 前端初次載入以伺服器 `getLocale()` 結果寫入 cookie（`LocaleBootstrap` 已就緒）；驗證語系切換（`LocaleSwitcher`）與各頁 i18n（metadata、manifest、Settings、Navbar、Weather/News 等）。
