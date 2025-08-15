@@ -95,5 +95,66 @@
                 "placeholder": "任何要給 LLM 的特別指示"
             }
         }
+    },
+    "components": {
+        "messageInput": {
+            "placeholder": "提出追問"
+        },
+        "copilot": {
+            "label": "Copilot"
+        },
+        "attach": {
+            "attachedFiles": "已附加的檔案",
+            "add": "新增",
+            "clear": "清除",
+            "attach": "附加",
+            "uploading": "上傳中...",
+            "files": "{count} 個檔案"
+        },
+        "focus": {
+            "button": "焦點",
+            "modes": {
+                "webSearch": {
+                    "title": "全部",
+                    "description": "在整個網路上搜尋"
+                },
+                "academicSearch": {
+                    "title": "學術",
+                    "description": "搜尋已發表的學術論文"
+                },
+                "writingAssistant": {
+                    "title": "寫作",
+                    "description": "不搜尋網路，直接聊天"
+                },
+                "wolframAlphaSearch": {
+                    "title": "Wolfram Alpha",
+                    "description": "計算型知識引擎"
+                },
+                "youtubeSearch": {
+                    "title": "YouTube",
+                    "description": "搜尋與觀看影片"
+                },
+                "redditSearch": {
+                    "title": "Reddit",
+                    "description": "搜尋討論與觀點"
+                }
+            }
+        },
+        "optimization": {
+            "modes": {
+                "speed": {
+                    "title": "速度",
+                    "description": "優先速度，以最快的方式得到答案。"
+                },
+                "balanced": {
+                    "title": "平衡",
+                    "description": "在速度與準確度之間取得平衡"
+                },
+                "quality": {
+                    "title": "品質（即將推出）",
+                    "description": "取得最完整與最精確的回答"
+                }
+            }
+        }
     }
 }

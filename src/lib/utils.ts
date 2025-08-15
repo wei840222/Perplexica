@@ -3,6 +3,22 @@ import { twMerge } from 'tailwind-merge';
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
+// Locale-aware absolute date formatting
+export const formatDate = (
+  date: Date | string,
+  locale: string,
+  options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  },
+) => {
+  const d = new Date(date);
+  return new Intl.DateTimeFormat(locale || undefined, options).format(d);
+};
+
 export const formatTimeDifference = (
   date1: Date | string,
   date2: Date | string,

@@ -1,7 +1,11 @@
 import { Clock, Edit, Share, Trash, FileText, FileDown } from 'lucide-react';
 import { Message } from './ChatWindow';
 import { useEffect, useState, Fragment } from 'react';
-import { formatTimeDifference, formatRelativeTime } from '@/lib/utils';
+import {
+  formatTimeDifference,
+  formatRelativeTime,
+  formatDate,
+} from '@/lib/utils';
 import { useLocale, useTranslations } from 'next-intl';
 import DeleteChat from './DeleteChat';
 import {
@@ -40,13 +44,15 @@ const exportAsMarkdown = (
   title: string,
   labels: ExportLabels,
 ) => {
-  const date = new Date(messages[0]?.createdAt || Date.now()).toLocaleString();
+  const locale =
+    (typeof navigator !== 'undefined' && navigator.language) || 'en';
+  const date = formatDate(messages[0]?.createdAt || Date.now(), locale);
   let md = `# 💬 ${labels.chatExportTitle({ title })}\n\n`;
   md += `*${labels.exportedOn} ${date}*\n\n---\n`;
   messages.forEach((msg) => {
     md += `\n---\n`;
     md += `**${msg.role === 'user' ? `🧑 ${labels.user}` : `🤖 ${labels.assistant}`}**  \n`;
-    md += `*${new Date(msg.createdAt).toLocaleString()}*\n\n`;
+    md += `*${formatDate(msg.createdAt, locale)}*\n\n`;
     md += `> ${msg.content.replace(/\n/g, '\n> ')}\n`;
     if (msg.sources && msg.sources.length > 0) {
       md += `\n**${labels.citations}**\n`;
@@ -73,7 +79,9 @@ const exportAsPDF = async (
   } catch (e) {
     // If network fails, fallback to default font (may garble CJK)
   }
-  const date = new Date(messages[0]?.createdAt || Date.now()).toLocaleString();
+  const locale =
+    (typeof navigator !== 'undefined' && navigator.language) || 'en';
+  const date = formatDate(messages[0]?.createdAt || Date.now(), locale);
   let y = 15;
   const pageHeight = doc.internal.pageSize.height;
   doc.setFontSize(18);
@@ -97,7 +105,7 @@ const exportAsPDF = async (
     doc.setFont('NotoSansTC', 'normal');
     doc.setFontSize(10);
     doc.setTextColor(120);
-    doc.text(`${new Date(msg.createdAt).toLocaleString()}`, 40, y);
+    doc.text(`${formatDate(msg.createdAt, locale)}`, 40, y);
     y += 6;
     doc.setTextColor(30);
     doc.setFontSize(12);

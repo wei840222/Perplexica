@@ -95,5 +95,66 @@
                 "placeholder": "Any special instructions for the LLM"
             }
         }
+    },
+    "components": {
+        "messageInput": {
+            "placeholder": "Ask a follow-up"
+        },
+        "copilot": {
+            "label": "Copilot"
+        },
+        "attach": {
+            "attachedFiles": "Attached files",
+            "add": "Add",
+            "clear": "Clear",
+            "attach": "Attach",
+            "uploading": "Uploading...",
+            "files": "{count} files"
+        },
+        "focus": {
+            "button": "Focus",
+            "modes": {
+                "webSearch": {
+                    "title": "All",
+                    "description": "Searches across all of the internet"
+                },
+                "academicSearch": {
+                    "title": "Academic",
+                    "description": "Search in published academic papers"
+                },
+                "writingAssistant": {
+                    "title": "Writing",
+                    "description": "Chat without searching the web"
+                },
+                "wolframAlphaSearch": {
+                    "title": "Wolfram Alpha",
+                    "description": "Computational knowledge engine"
+                },
+                "youtubeSearch": {
+                    "title": "YouTube",
+                    "description": "Search and watch videos"
+                },
+                "redditSearch": {
+                    "title": "Reddit",
+                    "description": "Search for discussions and opinions"
+                }
+            }
+        },
+        "optimization": {
+            "modes": {
+                "speed": {
+                    "title": "Speed",
+                    "description": "Prioritize speed and get the quickest possible answer."
+                },
+                "balanced": {
+                    "title": "Balanced",
+                    "description": "Find the right balance between speed and accuracy"
+                },
+                "quality": {
+                    "title": "Quality (Soon)",
+                    "description": "Get the most thorough and accurate answer"
+                }
+            }
+        }
     }
 }
