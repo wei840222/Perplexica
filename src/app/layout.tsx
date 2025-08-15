@@ -7,6 +7,8 @@ import { Toaster } from 'sonner';
 import ThemeProvider from '@/components/theme/Provider';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
+import LocaleBootstrap from '@/components/LocaleBootstrap';
+import { LOCALES, type AppLocale } from '@/i18n/locales';
 
 const montserrat = Montserrat({
   weight: ['300', '400', '500', '700'],
@@ -29,9 +31,15 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
+  const appLocale: AppLocale = (LOCALES as readonly string[]).includes(
+    locale as string,
+  )
+    ? (locale as AppLocale)
+    : 'en';
   return (
     <html className="h-full" lang={locale} suppressHydrationWarning>
       <body className={cn('h-full', montserrat.className)}>
+        <LocaleBootstrap initialLocale={appLocale} />
         <NextIntlClientProvider>
           <ThemeProvider>
             <Sidebar>{children}</Sidebar>

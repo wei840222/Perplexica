@@ -232,8 +232,7 @@ const Page = () => {
   // Remove prefix for UI display if it exists in stored value
   const stripPrefixedPrompt = (text: string) => {
     const trimmed = (text || '').trim();
-    const starts =
-      'Always respond to all non-code content and explanations in {';
+    const starts = 'Always respond to all non-code content and explanations in';
     if (trimmed.startsWith(starts)) {
       const parts = trimmed.split('\n\n');
       // Drop the first block (prefix paragraph and rules)
@@ -250,7 +249,7 @@ const Page = () => {
     // If already starts with the prefix (by simple inclusion of first sentence), avoid duplicating
     if (
       trimmed.startsWith(
-        `Always respond to all non-code content and explanations in {`,
+        `Always respond to all non-code content and explanations in`,
       )
     ) {
       // If locale changed, replace the existing first paragraph block
