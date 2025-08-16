@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
 
-node migrate.js
+./migrate
 
-exec node server.js
+exec bun server.js

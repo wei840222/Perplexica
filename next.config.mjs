@@ -3,13 +3,11 @@ import createNextIntlPlugin from 'next-intl/plugin';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  images: {
-    remotePatterns: [
-      {
-        hostname: 's2.googleusercontent.com',
-      },
-    ],
+  webpack: (config) => {
+    config.externals.push('bun:sqlite');
+    return config;
   },
+  images: { remotePatterns: [{ hostname: 's2.googleusercontent.com' }] },
   serverExternalPackages: ['pdf-parse'],
 };
 
