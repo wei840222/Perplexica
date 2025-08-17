@@ -11,7 +11,6 @@ RUN bun install --frozen-lockfile
 # then copy all (non-ignored) project files into the image
 COPY tsconfig.json next.config.mjs next-env.d.ts postcss.config.js drizzle.config.ts tailwind.config.ts ./
 COPY src ./src
-COPY messages ./messages
 COPY drizzle ./drizzle
 COPY data ./data
 COPY public ./public
