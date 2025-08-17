@@ -35,17 +35,17 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
     ],
     icons: [
       {
-        src: '/icon-50.png',
+        src: '/icons/50.png',
         sizes: '50x50',
-        type: 'image/png' as const,
+        type: 'image/png',
       },
       {
-        src: '/icon-100.png',
+        src: '/icons/100.png',
         sizes: '100x100',
         type: 'image/png',
       },
       {
-        src: '/icon.png',
+        src: '/icons/440.png',
         sizes: '440x440',
         type: 'image/png',
         purpose: 'any',
