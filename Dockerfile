@@ -9,24 +9,19 @@ COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
 # then copy all (non-ignored) project files into the image
-COPY tsconfig.json next.config.mjs next-env.d.ts postcss.config.js drizzle.config.ts tailwind.config.ts ./
+COPY tsconfig.json next.config.mjs next-env.d.ts postcss.config.js tailwind.config.ts drizzle.config.ts ./
 COPY src ./src
-COPY drizzle ./drizzle
-COPY data ./data
 COPY public ./public
-COPY uploads ./uploads
+COPY data ./data
+COPY drizzle ./drizzle
 
-# [optional] tests & build
+# tests & build
 ENV NODE_ENV=production
 RUN bun run build
 RUN bun build ./src/lib/db/migrate.ts --compile --outfile migrate
 
-# copy entrypoint
-COPY entrypoint.sh ./entrypoint.sh
-
 # copy production dependencies and source code into final image
 FROM oven/bun:1.2.20-slim
-WORKDIR /home/perplexica
 
 # update ca-certificates
 RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -34,17 +29,18 @@ RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -
     rm -rf /var/lib/apt/lists/*
 
 USER bun
+WORKDIR /home/perplexica
+RUN mkdir ./uploads
 
 COPY --from=builder --chown=bun:bun /usr/src/app/public ./public
 COPY --from=builder --chown=bun:bun /usr/src/app/.next/static ./public/_next/static
-
 COPY --from=builder --chown=bun:bun /usr/src/app/.next/standalone ./
+
 COPY --from=builder --chown=bun:bun /usr/src/app/data ./data
 COPY --from=builder --chown=bun:bun /usr/src/app/drizzle ./drizzle
 COPY --from=builder --chown=bun:bun /usr/src/app/migrate ./migrate
-COPY --from=builder --chown=bun:bun /usr/src/app/uploads ./uploads
 
-COPY --from=builder --chown=bun:bun /usr/src/app/entrypoint.sh ./entrypoint.sh
+COPY --chown=bun:bun entrypoint.sh ./entrypoint.sh
 
 # run the app
 EXPOSE 3000/tcp

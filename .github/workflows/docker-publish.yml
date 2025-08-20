@@ -125,7 +125,7 @@ jobs:
       - name: Update image tag
         working-directory: manifests
         run: |
-          cd kubernetes/apps-autosync/ai-planet
+          cd kubernetes/apps-autosync/ai-planet/perplexica
           kustomize edit set image ghcr.io/wei840222/perplexica:${{ github.ref_name }}
           git add .
           git commit -m "Update perplexica image to ${{ github.ref_name }}"
