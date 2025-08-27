@@ -7,8 +7,8 @@ import {
 } from '@headlessui/react';
 import { CopyPlus, File, LoaderCircle, Plus, Trash } from 'lucide-react';
 import { Fragment, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { useChat } from '@/lib/hooks/useChat';
+import { useTranslations } from 'next-intl';
 
 const Attach = ({ showText }: { showText?: boolean }) => {
   const { files, setFiles, setFileIds, fileIds } = useChat();
@@ -133,8 +133,8 @@ const Attach = ({ showText }: { showText?: boolean }) => {
                   key={i}
                   className="flex flex-row items-center justify-start w-full space-x-3 p-3"
                 >
-                  <div className="bg-dark-100 flex items-center justify-center w-10 h-10 rounded-md">
-                    <File size={16} className="text-white/70" />
+                  <div className="bg-light-100 dark:bg-dark-100 flex items-center justify-center w-10 h-10 rounded-md">
+                    <File size={16} className="text-black/70 dark:text-white/70" />
                   </div>
                   <p className="text-black/70 dark:text-white/70 text-sm">
                     {file.fileName.length > 25
