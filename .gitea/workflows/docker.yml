@@ -84,8 +84,9 @@ jobs:
           IMAGES: ${{ steps.meta.outputs.tags }}
         run: |
           echo "${{ secrets.PACKAGE_PAT }}" | skopeo login --tls-verify=false ${{ env.REGISTRY }} -u ${{ gitea.actor }} --password-stdin
+          export IMAGE_NAME_LOWER=$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
           for IMAGE in $IMAGES; do
-            TAG=${IMAGE#${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:}
+            TAG=${IMAGE#${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:}
             echo "Pushing image: \"$IMAGE\"", tag: \"$TAG\""."
             skopeo copy --dest-tls-verify=false --multi-arch=all oci-archive:./output.tar:$TAG docker://$IMAGE
           done
@@ -118,8 +119,9 @@ jobs:
       - name: Update image tag
         working-directory: manifests
         run: |
+          export IMAGE_NAME_LOWER=$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
           cd kubernetes/apps-autosync/ai-planet/perplexica
-          kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ gitea.ref_name }}
+          kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ gitea.ref_name }}
           git add .
-          git commit -m "Update ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} image to ${{ gitea.ref_name }}"
+          git commit -m "Update ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }} image to ${{ gitea.ref_name }}"
           git push
