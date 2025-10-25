@@ -1,6 +1,6 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1.2.20-debian AS builder
+FROM oven/bun:1.3.1-debian AS builder
 WORKDIR /usr/src/app
 
 # skip optional deps (e.g. sharp) to speed up install
@@ -21,7 +21,7 @@ RUN bun run build
 RUN bun build ./src/lib/db/migrate.ts --compile --outfile migrate
 
 # copy production dependencies and source code into final image
-FROM oven/bun:1.2.20-slim
+FROM oven/bun:1.3.1-slim
 
 # update ca-certificates
 RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \

@@ -1,15 +1,30 @@
+version: '3.8'
+
 services:
   perplexica:
-    image: itzcrazykns1337/perplexica:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - SEARXNG_API_URL=http://searxng:8080
+      - DATA_DIR=/home/perplexica
     ports:
-      - '3000:3000'
+      - 3000:3000
     volumes:
       - data:/home/perplexica/data
       - uploads:/home/perplexica/uploads
+
+  searxng:
+    image: searxng/searxng
     restart: unless-stopped
+    ports:
+      - 4000:8080
+    volumes:
+      - ./searxng:/etc/searxng:rw
 
 volumes:
   data:
-    name: 'perplexica-data'
+    name: perplexica-data
   uploads:
-    name: 'perplexica-uploads'
+    name: perplexica-uploads

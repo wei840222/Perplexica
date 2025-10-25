@@ -5,7 +5,7 @@
   "author": "ItzCrazyKns",
   "scripts": {
     "dev": "bun --bun next dev",
-    "build": "bun run db:push && NODE_ENV=production bun --bun next build",
+    "build": "NODE_ENV=production bun --bun next build",
     "start": "next start",
     "lint": "next lint",
     "format:write": "prettier . --write"
@@ -26,7 +26,6 @@
     "@langchain/textsplitters": "^1.0.0",
     "@tailwindcss/typography": "^0.5.12",
     "axios": "^1.8.3",
-    "better-sqlite3": "^11.9.1",
     "clsx": "^2.1.0",
     "compute-cosine-similarity": "^1.1.0",
     "drizzle-orm": "^0.40.1",
@@ -52,7 +51,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.12",
+    "@types/bun": "^1.3.1",
     "@types/html-to-text": "^9.0.4",
     "@types/jspdf": "^2.0.0",
     "@types/node": "^24.8.1",
