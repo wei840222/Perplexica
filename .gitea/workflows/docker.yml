@@ -64,6 +64,7 @@ jobs:
           password: ${{ secrets.PACKAGE_PAT }}
 
       - name: Build and Push Docker image
+        id: build-and-push
         uses: docker/build-push-action@v6.18.0
         with:
           file: ./Dockerfile
