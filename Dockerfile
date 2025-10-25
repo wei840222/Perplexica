@@ -43,6 +43,8 @@ COPY --from=builder --chown=bun:bun /usr/src/app/uploads ./uploads
 
 COPY --chown=bun:bun entrypoint.sh ./entrypoint.sh
 
+ENV DATA_DIR=/home/perplexica
+
 # run the app
 EXPOSE 3000/tcp
 ENTRYPOINT [ "./entrypoint.sh" ]
