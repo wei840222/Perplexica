@@ -152,7 +152,7 @@ class OpenAIProvider extends BaseModelProvider<OpenAIConfig> {
 
     return new ChatOpenAI({
       apiKey: this.config.apiKey,
-      temperature: 0.7,
+      temperature: 1,
       model: key,
       configuration: {
         baseURL: this.config.baseURL,
