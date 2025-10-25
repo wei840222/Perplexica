@@ -78,20 +78,6 @@ jobs:
           cache-from: type=local,src=/buildx-cache,compression=zstd
           cache-to: type=local,dest=/buildx-cache,compression=zstd,mode=max
 
-      - name: Run Trivy scan Docker image vulnerability
-        uses: aquasecurity/trivy-action@0.33.1
-        env:
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
-        with:
-          skip-setup-trivy: true
-          scan-type: image
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
-          format: table
-          vuln-type: os,library
-          severity: CRITICAL,HIGH,MEDIUM
-          ignore-unfixed: true
-          exit-code: 0
-
   update-github-manifests:
     runs-on: ubuntu-latest
 
