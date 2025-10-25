@@ -39,6 +39,7 @@ COPY --from=builder --chown=bun:bun /usr/src/app/.next/standalone ./
 COPY --from=builder --chown=bun:bun /usr/src/app/data ./data
 COPY --from=builder --chown=bun:bun /usr/src/app/drizzle ./drizzle
 COPY --from=builder --chown=bun:bun /usr/src/app/migrate ./migrate
+COPY --from=builder --chown=bun:bun /usr/src/app/uploads ./uploads
 
 COPY --chown=bun:bun entrypoint.sh ./entrypoint.sh
 

@@ -33,7 +33,7 @@ jobs:
         with:
           skip-setup-trivy: true
           scan-type: fs
-          scan-ref: ./apps/api
+          scan-ref: .
           format: table
           severity: CRITICAL,HIGH,MEDIUM
           ignore-unfixed: true
